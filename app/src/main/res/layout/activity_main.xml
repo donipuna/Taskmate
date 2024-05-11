@@ -117,7 +117,7 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:icon="@drawable/ic_add"
+        app:icon="@drawable/ic_add_circle"
         app:iconSize="25dp"
         app:iconTint="@color/white" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
