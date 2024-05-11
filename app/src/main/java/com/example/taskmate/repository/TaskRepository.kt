@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.room.Query
-import com.coding.meet.todo_app.utils.StatusResult
+import com.example.taskmate.utils.StatusResult
 import com.example.taskmate.database.TaskDatabase
 import com.example.taskmate.models.Task
 import com.example.taskmate.utils.Resource
