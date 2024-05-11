@@ -20,4 +20,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Taskmate"
-include(":app")
+include ':app'
