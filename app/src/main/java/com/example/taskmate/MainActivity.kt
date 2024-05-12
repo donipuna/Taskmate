@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -13,13 +12,11 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import androidx.room.Query
 import com.example.taskmate.adapters.TaskRVVBListAdapter
 import com.example.taskmate.databinding.ActivityMainBinding
 import com.example.taskmate.models.Task
@@ -41,7 +38,6 @@ import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.UUID
@@ -233,7 +229,6 @@ class MainActivity : AppCompatActivity() {
             if (type == "delete") {
                 taskViewModel
                     // Deleted Task
-//                .deleteTask(task)
                     .deleteTaskUsingId(task.id)
 
                 // Restore Deleted task
@@ -251,7 +246,6 @@ class MainActivity : AppCompatActivity() {
                             updateETTitle.text.toString().trim(),
                             updateETDesc.text.toString().trim(),
                             updatePriority.text.toString(),
-//                           here i Date updated
                             Date()
 
                         )
@@ -259,11 +253,7 @@ class MainActivity : AppCompatActivity() {
                         updateTaskDialog.dismiss()
                         taskViewModel
                             .updateTask(updateTask)
-//                            .updateTaskPaticularField(
-//                                task.id,
-//                                updateETTitle.text.toString().trim(),
-//                                updateETDesc.text.toString().trim()
-//                            )
+
                     }
                 }
                 updateTaskDialog.show()
@@ -275,7 +265,6 @@ class MainActivity : AppCompatActivity() {
             RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 super.onItemRangeInserted(positionStart, itemCount)
-//                mainBinding.taskRV.smoothScrollToPosition(positionStart)
                 mainBinding.nestedScrollView.smoothScrollTo(0,positionStart)
             }
         })
@@ -330,8 +319,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun callSortByDialog() {
-        var checkedItem = 0   // 2 is default item set
-        val items = arrayOf("Title Ascending", "Title Descending","Date Ascending","Date Descending","Priority Ascending", "Priority Descending")
+        var checkedItem = 4   // 4 is default item set
+        val items = arrayOf("Priority Low First", "Priority High First","Date Ascending","Date Descending","Title Ascending", "Title Descending")
 
         mainBinding.sortImg.setOnClickListener {
             MaterialAlertDialogBuilder(this)
@@ -339,16 +328,22 @@ class MainActivity : AppCompatActivity() {
                 .setPositiveButton("Ok") { _, _ ->
                     when (checkedItem) {
                         0 -> {
-                            taskViewModel.setSortBy(Pair("title",true))
+                            taskViewModel.setSortBy(Pair("priority",true))
                         }
                         1 -> {
-                            taskViewModel.setSortBy(Pair("title",false))
+                            taskViewModel.setSortBy(Pair("priority",false))
                         }
                         2 -> {
                             taskViewModel.setSortBy(Pair("date",true))
                         }
-                        else -> {
+                        3 -> {
                             taskViewModel.setSortBy(Pair("date",false))
+                        }
+                        4 -> {
+                            taskViewModel.setSortBy(Pair("title",true))
+                        }
+                        else -> {
+                            taskViewModel.setSortBy(Pair("title",false))
                         }
                     }
                 }

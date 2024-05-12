@@ -51,8 +51,10 @@ class TaskRepository(application: Application) {
                 delay(500)
                 val result = if (sortByName == "title"){
                     taskDao.getTaskListSortByTaskTitle(isAsc)
-                }else{
+                }else if (sortByName == "date"){
                     taskDao.getTaskListSortByTaskDate(isAsc)
+                }else{
+                    taskDao.sortByPriority(isAsc)
                 }
                 _taskStateFlow.emit(Success("loading", result))
             } catch (e: Exception) {

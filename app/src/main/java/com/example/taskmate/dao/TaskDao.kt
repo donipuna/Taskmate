@@ -18,6 +18,24 @@ interface TaskDao {
         CASE WHEN :isAsc = 0 THEN date END DESC""")
     fun getTaskListSortByTaskDate(isAsc: Boolean) : Flow<List<Task>>
 
+
+    @Query("""SELECT * FROM Task ORDER BY 
+    CASE WHEN :isAsc
+        THEN 
+            CASE 
+                WHEN priority LIKE 'L%' THEN 1 
+                WHEN priority LIKE 'M%' THEN 2 
+                WHEN priority LIKE 'H%' THEN 3 
+            END 
+        ELSE 
+            CASE 
+                WHEN priority LIKE 'H%' THEN 1 
+                WHEN priority LIKE 'M%' THEN 2 
+                WHEN priority LIKE 'L%' THEN 3
+            END 
+    END""")
+    fun sortByPriority(isAsc: Boolean): Flow<List<Task>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(task: Task): Long
 
@@ -44,19 +62,7 @@ interface TaskDao {
     fun searchTaskList(query: String) : Flow<List<Task>>
 
 
-    @Query(
-        "SELECT * FROM Task ORDER BY CASE " +
-                "WHEN priority LIKE 'H%' THEN 1 " +
-                "WHEN priority LIKE 'M%' THEN 2 " +
-                "WHEN priority LIKE 'L%' THEN 3 END"
-    )
-    fun sortByHighPriority(): LiveData<List<Task>>
 
-    @Query(
-        "SELECT * FROM Task ORDER BY CASE " +
-                "WHEN priority LIKE 'L%' THEN 1 " +
-                "WHEN priority LIKE 'M%' THEN 2 " +
-                "WHEN priority LIKE 'H%' THEN 3 END"
-    )
-    fun sortByLowPriority(): LiveData<List<Task>>
+
+
 }
