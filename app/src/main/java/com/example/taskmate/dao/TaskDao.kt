@@ -1,12 +1,12 @@
 package com.example.taskmate.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.taskmate.models.Task
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TaskDao {
-
 
     @Query("""SELECT * FROM Task ORDER BY
         CASE WHEN :isAsc = 1 THEN taskTitle END ASC, 
@@ -36,8 +36,8 @@ interface TaskDao {
     suspend fun updateTask(task: Task): Int
 
 
-    @Query("UPDATE Task SET taskTitle=:title, description = :description WHERE taskId = :taskId")
-    suspend fun updateTaskPaticularField(taskId:String,title:String,description:String): Int
+    @Query("UPDATE Task SET taskTitle=:title, description = :description, priority = :priority WHERE taskId = :taskId")
+    suspend fun updateTaskPaticularField(taskId:String,title:String,description:String,priority:String): Int
 
 
     @Query("SELECT * FROM Task WHERE taskTitle LIKE :query ORDER BY date DESC")

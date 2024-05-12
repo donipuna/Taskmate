@@ -7,6 +7,8 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -44,7 +46,17 @@ import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.UUID
 
+
 class MainActivity : AppCompatActivity() {
+
+    // Define the adapter outside
+    val taskPrioritiesAdapter: ArrayAdapter<String> by lazy {
+        ArrayAdapter(
+            this,
+            android.R.layout.simple_dropdown_item_1line,
+            resources.getStringArray(R.array.task_priorities)
+        )
+    }
 
     private val mainBinding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -53,12 +65,21 @@ class MainActivity : AppCompatActivity() {
     private val addTaskDialog: Dialog by lazy {
         Dialog(this, R.style.DialogCustomTheme).apply {
             setupDialog(R.layout.add_task_dialog)
+
+            // Set the adapter to the AutoCompleteTextView
+            val textView = findViewById<AutoCompleteTextView>(R.id.task_priority)
+            textView.setAdapter(taskPrioritiesAdapter)
         }
     }
+
 
     private val updateTaskDialog: Dialog by lazy {
         Dialog(this, R.style.DialogCustomTheme).apply {
             setupDialog(R.layout.update_task_dialog)
+
+            // Set the adapter to the AutoCompleteTextView
+            val textView = findViewById<AutoCompleteTextView>(R.id.task_priority)
+            textView.setAdapter(taskPrioritiesAdapter)
         }
     }
 
@@ -108,22 +129,35 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        val addPriority = addTaskDialog.findViewById<AutoCompleteTextView>(R.id.task_priority)
+        val addPriorityL = addTaskDialog.findViewById<TextInputLayout>(R.id.task_priorityL)
+
+        addPriority.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                validateEditText(addPriority, addPriorityL)
+            }
+        })
+
         mainBinding.addTaskFABtn.setOnClickListener {
             clearEditText(addETTitle, addETTitleL)
             clearEditText(addETDesc, addETDescL)
+            clearEditText(addPriority, addPriorityL)
             addTaskDialog.show()
         }
         val saveTaskBtn = addTaskDialog.findViewById<Button>(R.id.saveTaskBtn)
         saveTaskBtn.setOnClickListener {
             if (validateEditText(addETTitle, addETTitleL)
-                && validateEditText(addETDesc, addETDescL)
+                && validateEditText(addETDesc, addETDescL) && validateEditText(addPriority, addPriorityL)
             ) {
-
                 val newTask = Task(
                     UUID.randomUUID().toString(),
                     addETTitle.text.toString().trim(),
                     addETDesc.text.toString().trim(),
+                    addPriority.text.toString(), // Priority value
                     Date()
+
                 )
                 hideKeyBoard(it)
                 addTaskDialog.dismiss()
@@ -156,6 +190,19 @@ class MainActivity : AppCompatActivity() {
                 validateEditText(updateETDesc, updateETDescL)
             }
         })
+
+        val updatePriority = updateTaskDialog.findViewById<AutoCompleteTextView>(R.id.task_priority)
+        val updatePriorityL = updateTaskDialog.findViewById<TextInputLayout>(R.id.task_priorityL)
+
+        updatePriority.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                validateEditText(updatePriority, updatePriorityL)
+            }
+        })
+
+
 
         val updateCloseImg = updateTaskDialog.findViewById<ImageView>(R.id.closeImg)
         updateCloseImg.setOnClickListener { updateTaskDialog.dismiss() }
@@ -194,16 +241,19 @@ class MainActivity : AppCompatActivity() {
             } else if (type == "update") {
                 updateETTitle.setText(task.title)
                 updateETDesc.setText(task.description)
+                updatePriority.setText(task.priority)
                 updateTaskBtn.setOnClickListener {
                     if (validateEditText(updateETTitle, updateETTitleL)
-                        && validateEditText(updateETDesc, updateETDescL)
+                        && validateEditText(updateETDesc, updateETDescL) && validateEditText(addPriority, addPriorityL)
                     ) {
                         val updateTask = Task(
                             task.id,
                             updateETTitle.text.toString().trim(),
                             updateETDesc.text.toString().trim(),
+                            updatePriority.text.toString(),
 //                           here i Date updated
                             Date()
+
                         )
                         hideKeyBoard(it)
                         updateTaskDialog.dismiss()

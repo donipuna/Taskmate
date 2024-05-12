@@ -25,9 +25,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="16dp"
-                android:text="Welcome Back"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:text="Welcome"
+                android:textSize="23sp"
+                android:textStyle="bold"
+                android:textColor="@color/AccentColor"/>
 
             <TextView
                 android:id="@+id/todayTxt"
@@ -36,9 +37,10 @@
                 android:layout_below="@id/welcomeTxt"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="4dp"
-                android:text="Today's Task"
-                android:textSize="28sp"
-                android:textStyle="bold" />
+                android:text="To Do List"
+                android:textSize="27sp"
+                android:textStyle="bold"
+                android:textColor="@color/AccentColor"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -55,14 +57,15 @@
                     android:id="@+id/sortImg"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/ic_sort" />
+                    android:src="@drawable/ic_sort"
+                    app:tint="@color/AccentColor"/>
 
                 <ImageView
                     android:id="@+id/listOrGridImg"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/ic_view_list"
-                    app:tint="@color/black" />
+                    app:tint="@color/AccentColor" />
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -76,13 +79,14 @@
                 android:layout_marginTop="8dp"
                 app:errorEnabled="false"
                 app:hintEnabled="false"
-                app:startIconDrawable="@drawable/ic_search">
+                app:startIconDrawable="@drawable/ic_search"
+                android:paddingTop="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edSearch"
+                    android:background="@drawable/curved_bg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:hint="Enter search title"
                     android:imeOptions="actionSearch"
                     android:inputType="text" />
@@ -112,12 +116,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/SecondaryColor"
         android:text="Add Task"
-        android:textColor="@color/white"
+        android:textColor="@color/BtnTxtColor"
         android:textSize="18sp"
         android:textStyle="bold"
         app:icon="@drawable/ic_add_circle"
         app:iconSize="25dp"
-        app:iconTint="@color/white" />
+        app:iconTint="@color/BtnTxtColor" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

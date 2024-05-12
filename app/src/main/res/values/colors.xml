@@ -2,5 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="mainBackground">#4CC380</color>
+    <color name="mainBackground">#40A373</color>
+    <color name="PrimaryColor">#40A373</color>
+    <color name="SecondaryColor">#E6C61E</color>
+    <color name="AccentColor">#F3F3F3</color>
+    <color name="BtnTxtColor">#663100</color>
+
 </resources>

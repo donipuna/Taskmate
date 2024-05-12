@@ -7,6 +7,7 @@ import androidx.room.Query
 import com.example.taskmate.models.Task
 import com.example.taskmate.repository.TaskRepository
 import com.example.taskmate.utils.Resource
+import com.example.taskmate.models.Priority
 
 class TaskViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -39,10 +40,19 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
         taskRepository.updateTask(task)
     }
 
-    fun updateTaskPaticularField(taskId: String,title:String,description:String) {
-        taskRepository.updateTaskPaticularField(taskId, title, description)
+    fun updateTaskPaticularField(taskId: String,title:String,description:String, priority:String) {
+        taskRepository.updateTaskPaticularField(taskId, title, description, priority)
     }
     fun searchTaskList(query: String){
         taskRepository.searchTaskList(query)
+    }
+
+    fun parsePriorityString(priority: String): Priority {
+        return when(priority) {
+            "High Priority" -> Priority.High
+            "Low Priority" -> Priority.Low
+            "Medium Priority" -> Priority.Medium
+            else -> Priority.Low
+        }
     }
 }

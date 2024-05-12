@@ -13,5 +13,7 @@ data class Task(
     @ColumnInfo(name = "taskTitle")
     val title: String,
     val description: String,
-    val date: Date,
+    val priority: String, // New field for storing priority
+    val date: Date
+
 )

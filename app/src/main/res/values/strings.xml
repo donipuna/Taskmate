@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Taskmate</string>
+
+    <string-array name="task_priorities">
+        <item>High Priority</item>
+        <item>Medium Priority</item>
+        <item>Low Priority</item>
+    </string-array>
 </resources>
