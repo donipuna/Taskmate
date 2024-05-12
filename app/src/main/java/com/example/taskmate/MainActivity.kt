@@ -244,7 +244,7 @@ class MainActivity : AppCompatActivity() {
                 updatePriority.setText(task.priority)
                 updateTaskBtn.setOnClickListener {
                     if (validateEditText(updateETTitle, updateETTitleL)
-                        && validateEditText(updateETDesc, updateETDescL) && validateEditText(addPriority, addPriorityL)
+                        && validateEditText(updateETDesc, updateETDescL)
                     ) {
                         val updateTask = Task(
                             task.id,

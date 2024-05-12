@@ -1,16 +1,20 @@
 package com.example.taskmate.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.taskmate.R
 import com.example.taskmate.databinding.ViewTaskGridLayoutBinding
 import com.example.taskmate.databinding.ViewTaskListLayoutBinding
 import com.example.taskmate.models.Task
 import java.text.SimpleDateFormat
 import java.util.Locale
+
 
 class TaskRVVBListAdapter(
     private val isList: MutableLiveData<Boolean>,
@@ -29,10 +33,12 @@ class TaskRVVBListAdapter(
         ) {
             viewTaskListLayoutBinding.titleTxt.text = task.title
             viewTaskListLayoutBinding.descrTxt.text = task.description
-
             val dateFormat = SimpleDateFormat("dd-MMM-yyyy HH:mm:ss a", Locale.getDefault())
-
             viewTaskListLayoutBinding.dateTxt.text = dateFormat.format(task.date)
+
+            // Dynamically change the background color of priority_indicator based on priority
+            val priorityIndicator = getPriorityColor(viewTaskListLayoutBinding.root.context,task.priority)
+            viewTaskListLayoutBinding.priorityIndicator.setCardBackgroundColor(priorityIndicator)
 
             viewTaskListLayoutBinding.deleteImg.setOnClickListener {
                 if (adapterPosition != -1) {
@@ -43,6 +49,15 @@ class TaskRVVBListAdapter(
                 if (adapterPosition != -1) {
                     deleteUpdateCallback("update", adapterPosition, task)
                 }
+            }
+        }
+
+        private fun getPriorityColor(context: Context, priority: String): Int {
+            return when (priority) {
+                "High Priority" -> ContextCompat.getColor(context, R.color.Priority_High)
+                "Medium Priority" -> ContextCompat.getColor(context, R.color.Priority_Medium)
+                "Low Priority" -> ContextCompat.getColor(context, R.color.Priority_Low)
+                else -> ContextCompat.getColor(context, R.color.Priority_null)
             }
         }
     }
@@ -59,8 +74,11 @@ class TaskRVVBListAdapter(
             viewTaskGridLayoutBinding.descrTxt.text = task.description
 
             val dateFormat = SimpleDateFormat("dd-MMM-yyyy HH:mm:ss a", Locale.getDefault())
-
             viewTaskGridLayoutBinding.dateTxt.text = dateFormat.format(task.date)
+
+            // Dynamically change the background color of priority_indicator based on priority
+            val priorityIndicator = getPriorityColor(viewTaskGridLayoutBinding.root.context,task.priority)
+            viewTaskGridLayoutBinding.priorityIndicator.setCardBackgroundColor(priorityIndicator)
 
             viewTaskGridLayoutBinding.deleteImg.setOnClickListener {
                 if (adapterPosition != -1) {
@@ -71,6 +89,15 @@ class TaskRVVBListAdapter(
                 if (adapterPosition != -1) {
                     deleteUpdateCallback("update", adapterPosition, task)
                 }
+            }
+        }
+
+        private fun getPriorityColor(context: Context, priority: String): Int {
+            return when (priority) {
+                "High Priority" -> ContextCompat.getColor(context, R.color.Priority_High)
+                "Medium Priority" -> ContextCompat.getColor(context, R.color.Priority_Medium)
+                "Low Priority" -> ContextCompat.getColor(context, R.color.Priority_Low)
+                else -> ContextCompat.getColor(context, R.color.Priority_null)
             }
         }
     }
@@ -130,5 +157,8 @@ class TaskRVVBListAdapter(
         }
 
     }
+
+
+
 
 }

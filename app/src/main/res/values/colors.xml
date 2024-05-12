@@ -13,6 +13,9 @@
     <color name="Priority_High">#E91E1E</color>
     <color name="Priority_Medium">#FFC107</color>
     <color name="Priority_Low">#4CAF50</color>
+    <color name="Priority_null">#4E4E4E</color>
+
+
 
 
 

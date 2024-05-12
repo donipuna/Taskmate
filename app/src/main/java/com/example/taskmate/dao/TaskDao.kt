@@ -42,4 +42,21 @@ interface TaskDao {
 
     @Query("SELECT * FROM Task WHERE taskTitle LIKE :query ORDER BY date DESC")
     fun searchTaskList(query: String) : Flow<List<Task>>
+
+
+    @Query(
+        "SELECT * FROM Task ORDER BY CASE " +
+                "WHEN priority LIKE 'H%' THEN 1 " +
+                "WHEN priority LIKE 'M%' THEN 2 " +
+                "WHEN priority LIKE 'L%' THEN 3 END"
+    )
+    fun sortByHighPriority(): LiveData<List<Task>>
+
+    @Query(
+        "SELECT * FROM Task ORDER BY CASE " +
+                "WHEN priority LIKE 'L%' THEN 1 " +
+                "WHEN priority LIKE 'M%' THEN 2 " +
+                "WHEN priority LIKE 'H%' THEN 3 END"
+    )
+    fun sortByLowPriority(): LiveData<List<Task>>
 }
