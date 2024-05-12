@@ -241,7 +241,7 @@ class MainActivity : AppCompatActivity() {
             } else if (type == "update") {
                 updateETTitle.setText(task.title)
                 updateETDesc.setText(task.description)
-                updatePriority.setText(task.priority)
+                updatePriority.setText(task.priority,false)
                 updateTaskBtn.setOnClickListener {
                     if (validateEditText(updateETTitle, updateETTitleL)
                         && validateEditText(updateETDesc, updateETDescL)
