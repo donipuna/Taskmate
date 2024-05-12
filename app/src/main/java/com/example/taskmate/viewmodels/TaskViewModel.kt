@@ -2,12 +2,8 @@ package com.example.taskmate.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.room.Query
 import com.example.taskmate.models.Task
 import com.example.taskmate.repository.TaskRepository
-import com.example.taskmate.utils.Resource
-import com.example.taskmate.models.Priority
 
 class TaskViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -47,12 +43,4 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
         taskRepository.searchTaskList(query)
     }
 
-    fun parsePriorityString(priority: String): Priority {
-        return when(priority) {
-            "High Priority" -> Priority.High
-            "Low Priority" -> Priority.Low
-            "Medium Priority" -> Priority.Medium
-            else -> Priority.Low
-        }
-    }
 }

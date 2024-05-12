@@ -6,6 +6,14 @@
     <color name="PrimaryColor">#40A373</color>
     <color name="SecondaryColor">#E6C61E</color>
     <color name="AccentColor">#F3F3F3</color>
+
+    <color name="BtnColor">@color/SecondaryColor</color>
     <color name="BtnTxtColor">#663100</color>
+
+    <color name="Priority_High">#E91E1E</color>
+    <color name="Priority_Medium">#FFC107</color>
+    <color name="Priority_Low">#4CAF50</color>
+
+
 
 </resources>

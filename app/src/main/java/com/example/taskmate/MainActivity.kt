@@ -331,7 +331,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun callSortByDialog() {
         var checkedItem = 0   // 2 is default item set
-        val items = arrayOf("Title Ascending", "Title Descending","Date Ascending","Date Descending")
+        val items = arrayOf("Title Ascending", "Title Descending","Date Ascending","Date Descending","Priority Ascending", "Priority Descending")
 
         mainBinding.sortImg.setOnClickListener {
             MaterialAlertDialogBuilder(this)
